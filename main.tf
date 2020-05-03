@@ -23,3 +23,17 @@ resource "aws_s3_bucket" "terraform_state" {
     enabled = true
   }
 }
+
+module "virginia" {
+  source = "./modules/aws/guardduty"
+  providers = {
+    aws = aws.Virginia
+  }
+}
+
+module "tokyo" {
+  source = "./modules/aws/guardduty"
+  providers = {
+    aws = aws.Tokyo
+  }
+}
