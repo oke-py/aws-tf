@@ -69,3 +69,11 @@ resource "aws_s3_bucket_policy" "cloudtrail" {
   bucket = aws_s3_bucket.cloudtrail-bucket.bucket
   policy = data.aws_iam_policy_document.cloudtrail-bucket-policy.json
 }
+
+resource "aws_cloudtrail" "sec-cloudtrail" {
+  name                          = "sec-cloudtrail"
+  s3_bucket_name                = aws_s3_bucket.cloudtrail-bucket.bucket
+  enable_log_file_validation    = true
+  include_global_service_events = true
+  is_multi_region_trail         = true
+}
