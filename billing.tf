@@ -68,6 +68,15 @@ resource "aws_s3_bucket_policy" "cost-report" {
   policy = data.aws_iam_policy_document.s3bucket-policy.json
 }
 
+resource "aws_s3_bucket_public_access_block" "cost-report" {
+  bucket = aws_s3_bucket.cost-report.bucket
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
 resource "aws_cur_report_definition" "cost-report" {
   report_name                = "sec-cur"
   compression                = "GZIP"
