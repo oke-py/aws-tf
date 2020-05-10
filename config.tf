@@ -1,3 +1,7 @@
+########################################
+# S3
+########################################
+
 data "aws_iam_policy_document" "config-bucket-policy" {
   version = "2012-10-17"
   statement {
@@ -89,4 +93,86 @@ resource "aws_s3_bucket_public_access_block" "config" {
   block_public_policy     = true
   ignore_public_acls      = true
   restrict_public_buckets = true
+}
+
+########################################
+# AWS Config
+########################################
+
+resource "aws_iam_role" "r" {
+  name = "aws-config"
+
+  assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "config.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role_policy" "p" {
+  name = "aws-config"
+  role = aws_iam_role.r.id
+
+  policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "s3:GetBucketAcl"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "${aws_s3_bucket.config-bucket.arn}"
+      ]
+    },
+    {
+      "Action": [
+        "s3:PutObject"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "${aws_s3_bucket.config-bucket.arn}/AWSLogs/${data.aws_caller_identity.self.account_id}/*"
+      ],
+      "Condition":
+      {
+        "StringLike":
+        {
+          "s3:x-amz-acl": "bucket-owner-full-control"
+        }
+      }
+    }
+  ]
+}
+POLICY
+}
+
+module "config-virginia" {
+  source = "./modules/aws/config"
+  providers = {
+    aws = aws.Virginia
+  }
+  bucket   = aws_s3_bucket.config-bucket.bucket
+  region   = "us-east-1"
+  role_arn = aws_iam_role.r.arn
+}
+
+module "config-tokyo" {
+  source = "./modules/aws/config"
+  providers = {
+    aws = aws.Tokyo
+  }
+  bucket   = aws_s3_bucket.config-bucket.bucket
+  region   = "ap-northeast-1"
+  role_arn = aws_iam_role.r.arn
 }
