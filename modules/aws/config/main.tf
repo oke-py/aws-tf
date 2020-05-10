@@ -1,6 +1,7 @@
 variable bucket {}
 variable region {}
-variable role_arn {}
+
+data "aws_caller_identity" "self" {}
 
 resource "aws_config_delivery_channel" "config-dc" {
   name           = "aws-config-${var.region}"
@@ -10,7 +11,7 @@ resource "aws_config_delivery_channel" "config-dc" {
 
 resource "aws_config_configuration_recorder" "config-rec" {
   name     = "aws-config-${var.region}"
-  role_arn = var.role_arn
+  role_arn = "arn:aws:iam::${data.aws_caller_identity.self.account_id}:role/aws-service-role/config.amazonaws.com/AWSServiceRoleForConfig"
   recording_group {
     include_global_resource_types = var.region == "us-east-1" ? true : false
   }
