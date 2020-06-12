@@ -64,3 +64,11 @@ resource "aws_config_config_rule" "s3-bucket-public-write-prohibited" {
 
   depends_on = [aws_config_configuration_recorder.config-rec]
 }
+
+########################################
+# SNS
+########################################
+
+resource "aws_sns_topic" "config_alert" {
+  name = "config-alert"
+}
