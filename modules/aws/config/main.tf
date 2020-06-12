@@ -6,6 +6,7 @@ data "aws_caller_identity" "self" {}
 resource "aws_config_delivery_channel" "config-dc" {
   name           = "aws-config-${var.region}"
   s3_bucket_name = var.bucket
+  sns_topic_arn  = aws_sns_topic.config_alert.arn
   depends_on     = [aws_config_configuration_recorder.config-rec]
 }
 
