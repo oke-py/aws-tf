@@ -12,7 +12,8 @@ jobs:
     - uses: hashicorp/setup-terraform@v1
     - name: Terraform fmt
       id: fmt
-      run: terraform fmt | [[ $(grep -c '') == 0 ]]
+      run: terraform fmt
+    - run: [[ echo ${{ steps.fmt.outputs.stdout }} | grep -c '' ]]
 
   validate:
     runs-on: ubuntu-latest
