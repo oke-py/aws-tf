@@ -13,7 +13,8 @@ jobs:
     - name: Terraform fmt
       id: fmt
       run: terraform fmt
-    - run: [[ echo ${{ steps.fmt.outputs.stdout }} | grep -c '' ]]
+    - if: ${{ steps.fmt.outputs.stdout != '' }}
+      run: exit 1
 
   validate:
     runs-on: ubuntu-latest
