@@ -12,7 +12,7 @@ jobs:
     - uses: hashicorp/setup-terraform@v1
     - name: Terraform fmt
       id: fmt
-      run: terraform fmt
+      run: terraform fmt | [[ $(grep -c '') == 0 ]]
 
   validate:
     runs-on: ubuntu-latest
