@@ -12,9 +12,7 @@ jobs:
     - uses: hashicorp/setup-terraform@v1
     - name: Terraform fmt
       id: fmt
-      run: terraform fmt
-    - if: ${{ steps.fmt.outputs.stdout != '' }}
-      run: exit 1
+      run: terraform fmt -check
 
   validate:
     runs-on: ubuntu-latest
