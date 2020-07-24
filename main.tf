@@ -10,6 +10,7 @@ terraform {
 
 variable "aws_access_key" {}
 variable "aws_secret_key" {}
+variable "org_account1_id" {}
 variable "slack_aws_alert_url" {}
 
 provider "aws" {
@@ -72,6 +73,11 @@ resource "aws_organizations_policy" "scp_restrict_region" {
   ]
 }
 CONTENT
+}
+
+resource "aws_organizations_policy_attachment" "account" {
+  policy_id = aws_organizations_policy.scp_restrict_region.id
+  target_id = var.org_account1_id
 }
 
 module "virginia" {
