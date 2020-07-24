@@ -25,6 +25,9 @@ resource "aws_s3_bucket" "terraform_state" {
   }
 }
 
+resource "aws_organizations_organization" "org" {
+}
+
 module "virginia" {
   source = "./modules/aws/guardduty"
   providers = {
