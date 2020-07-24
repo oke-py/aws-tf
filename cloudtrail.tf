@@ -36,6 +36,26 @@ data "aws_iam_policy_document" "cloudtrail-bucket-policy" {
       values = ["bucket-owner-full-control"]
     }
   }
+  statement {
+    sid    = "AWSCloudTrailWrite20150319Org"
+    effect = "Allow"
+    principals {
+      type        = "Service"
+      identifiers = ["cloudtrail.amazonaws.com"]
+    }
+    actions = [
+      "s3:PutObject"
+    ]
+    resources = [
+      "${aws_s3_bucket.cloudtrail-bucket.arn}/AWSLogs/${aws_organizations_organization.org.id}/*"
+    ]
+    condition {
+      test     = "StringEquals"
+      variable = "s3:x-amz-acl"
+
+      values = ["bucket-owner-full-control"]
+    }
+  }
 }
 
 resource "aws_s3_bucket" "cloudtrail-bucket" {
