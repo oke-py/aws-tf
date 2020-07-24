@@ -25,6 +25,15 @@ resource "aws_s3_bucket" "terraform_state" {
   }
 }
 
+resource "aws_organizations_organization" "org" {
+  aws_service_access_principals = [
+    "cloudtrail.amazonaws.com",
+    "config.amazonaws.com",
+  ]
+
+  feature_set = "ALL"
+}
+
 module "virginia" {
   source = "./modules/aws/guardduty"
   providers = {
