@@ -84,7 +84,7 @@ resource "aws_organizations_policy_attachment" "account" {
 
 resource "aws_organizations_organizational_unit" "dev" {
   name      = "dev"
-  parent_id = aws_organizations_organization.dev.roots[0].id
+  parent_id = aws_organizations_organization.org.roots[0].id
 }
 
 module "virginia" {
