@@ -60,7 +60,6 @@ resource "aws_s3_bucket" "cost-report" {
   bucket        = "sec-cur-ng46"
   acl           = "private"
   force_destroy = "false"
-  region        = "us-east-1"
 }
 
 resource "aws_s3_bucket_policy" "cost-report" {

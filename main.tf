@@ -82,6 +82,11 @@ resource "aws_organizations_policy_attachment" "account" {
   target_id = var.org_account1_id
 }
 
+resource "aws_organizations_organizational_unit" "dev" {
+  name      = "dev"
+  parent_id = aws_organizations_organization.org.roots[0].id
+}
+
 module "virginia" {
   source = "./modules/aws/guardduty"
   providers = {
