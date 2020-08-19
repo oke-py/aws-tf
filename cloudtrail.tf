@@ -61,7 +61,6 @@ data "aws_iam_policy_document" "cloudtrail-bucket-policy" {
 resource "aws_s3_bucket" "cloudtrail-bucket" {
   bucket = "sec-cloudtrail-ng46"
   acl    = "private"
-  region = "us-east-1"
 
   lifecycle_rule {
     enabled = true

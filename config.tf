@@ -57,7 +57,6 @@ data "aws_iam_policy_document" "config-bucket-policy" {
 resource "aws_s3_bucket" "config-bucket" {
   bucket = "sec-config-ng46"
   acl    = "private"
-  region = "us-east-1"
 
   lifecycle_rule {
     enabled = true
