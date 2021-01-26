@@ -105,7 +105,7 @@ resource "aws_cloudwatch_log_group" "cloudtrail-log" {
 resource "aws_cloudtrail" "sec-cloudtrail" {
   name                          = "sec-cloudtrail"
   s3_bucket_name                = aws_s3_bucket.cloudtrail-bucket.bucket
-  cloud_watch_logs_group_arn    = aws_cloudwatch_log_group.cloudtrail-log.arn
+  cloud_watch_logs_group_arn    = "${aws_cloudwatch_log_group.cloudtrail-log.arn}:*"
   cloud_watch_logs_role_arn     = "arn:aws:iam::${data.aws_caller_identity.self.account_id}:role/CloudTrail_CloudWatchLogs_Role"
   enable_log_file_validation    = true
   include_global_service_events = true
