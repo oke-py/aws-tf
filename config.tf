@@ -15,7 +15,7 @@ data "aws_iam_policy_document" "config-bucket-policy" {
       "s3:GetBucketAcl"
     ]
     resources = [
-      "${aws_s3_bucket.config-bucket.arn}"
+      aws_s3_bucket.config-bucket.arn
     ]
   }
   statement {
@@ -29,7 +29,7 @@ data "aws_iam_policy_document" "config-bucket-policy" {
       "s3:ListBucket"
     ]
     resources = [
-      "${aws_s3_bucket.config-bucket.arn}"
+      aws_s3_bucket.config-bucket.arn
     ]
   }
   statement {

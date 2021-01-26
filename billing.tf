@@ -37,7 +37,7 @@ data "aws_iam_policy_document" "s3bucket-policy" {
       "s3:GetBucketAcl"
     ]
     resources = [
-      "${aws_s3_bucket.cost-report.arn}"
+      aws_s3_bucket.cost-report.arn
     ]
   }
   statement {
