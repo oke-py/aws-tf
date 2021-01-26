@@ -10,6 +10,7 @@ terraform {
 
 variable "aws_access_key" {}
 variable "aws_secret_key" {}
+variable "org_admin_id" {}
 variable "org_account1_id" {}
 variable "slack_aws_alert_url" {}
 
@@ -30,6 +31,7 @@ resource "aws_organizations_organization" "org" {
   aws_service_access_principals = [
     "cloudtrail.amazonaws.com",
     "config.amazonaws.com",
+    "guardduty.amazonaws.com",
   ]
   enabled_policy_types = [
     "SERVICE_CONTROL_POLICY"
@@ -101,4 +103,10 @@ module "tokyo" {
     aws = aws.Tokyo
   }
   slack_aws_alert_url = var.slack_aws_alert_url
+}
+
+resource "aws_guardduty_organization_admin_account" "root" {
+  depends_on = [aws_organizations_organization.org]
+
+  admin_account_id = var.org_admin_id
 }
