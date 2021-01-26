@@ -13,7 +13,7 @@ data "aws_iam_policy_document" "cloudtrail-bucket-policy" {
       "s3:GetBucketAcl"
     ]
     resources = [
-      "${aws_s3_bucket.cloudtrail-bucket.arn}"
+      aws_s3_bucket.cloudtrail-bucket.arn
     ]
   }
   statement {
