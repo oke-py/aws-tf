@@ -89,12 +89,20 @@ resource "aws_organizations_organizational_unit" "dev" {
   parent_id = aws_organizations_organization.org.roots[0].id
 }
 
+resource "aws_guardduty_organization_admin_account" "root" {
+  depends_on = [aws_organizations_organization.org]
+
+  admin_account_id = var.org_admin_id
+}
+
 module "virginia" {
   source = "./modules/aws/guardduty"
   providers = {
     aws = aws.Virginia
   }
   slack_aws_alert_url = var.slack_aws_alert_url
+
+  depends_on = [aws_guardduty_organization_admin_account.root]
 }
 
 module "tokyo" {
@@ -103,10 +111,6 @@ module "tokyo" {
     aws = aws.Tokyo
   }
   slack_aws_alert_url = var.slack_aws_alert_url
-}
 
-resource "aws_guardduty_organization_admin_account" "root" {
-  depends_on = [aws_organizations_organization.org]
-
-  admin_account_id = var.org_admin_id
+  depends_on = [aws_guardduty_organization_admin_account.root]
 }
