@@ -100,6 +100,7 @@ module "virginia" {
   providers = {
     aws = aws.Virginia
   }
+  aws_account_id      = var.org_admin_id
   slack_aws_alert_url = var.slack_aws_alert_url
 
   depends_on = [aws_guardduty_organization_admin_account.root]
@@ -110,6 +111,7 @@ module "tokyo" {
   providers = {
     aws = aws.Tokyo
   }
+  aws_account_id      = var.org_admin_id
   slack_aws_alert_url = var.slack_aws_alert_url
 
   depends_on = [aws_guardduty_organization_admin_account.root]
