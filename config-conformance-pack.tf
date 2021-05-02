@@ -68,6 +68,7 @@ resource "aws_iam_role_policy_attachment" "aggregator" {
 resource "aws_s3_bucket" "delivery" {
   bucket = "awsconfigconforms-my-rule"
   acl    = "private"
+  region = "ap-northeast-1"
 
   lifecycle_rule {
     enabled = true
