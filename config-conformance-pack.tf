@@ -36,7 +36,7 @@ resource "aws_config_configuration_aggregator" "organization" {
 
   organization_aggregation_source {
     all_regions = true
-    role_arn    = aws_iam_role.organization.arn
+    role_arn    = aws_iam_role.aggregator.arn
   }
 }
 
