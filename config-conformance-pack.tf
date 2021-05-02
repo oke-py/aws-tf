@@ -30,7 +30,7 @@ EOT
 }
 
 resource "aws_config_configuration_aggregator" "organization" {
-  depends_on = [aws_iam_role_policy_attachment.organization]
+  depends_on = [aws_iam_role_policy_attachment.aggregator]
 
   name = "my-config-aggregator"
 
@@ -60,8 +60,8 @@ resource "aws_iam_role" "aggregator" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "organization" {
-  role       = aws_iam_role.organization.name
+resource "aws_iam_role_policy_attachment" "aggregator" {
+  role       = aws_iam_role.aggregator.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSConfigRoleForOrganizations"
 }
 
