@@ -4,6 +4,7 @@ resource "aws_config_aggregate_authorization" "organization" {
 }
 
 resource "aws_config_conformance_pack" "organization" {
+  provider           = aws.Tokyo
   name               = "my-rule"
   delivery_s3_bucket = aws_s3_bucket.delivery.bucket
 
@@ -27,7 +28,8 @@ EOT
 resource "aws_config_configuration_aggregator" "organization" {
   depends_on = [aws_iam_role_policy_attachment.aggregator]
 
-  name = "my-config-aggregator"
+  provider = aws.Tokyo
+  name     = "my-config-aggregator"
 
   organization_aggregation_source {
     all_regions = true
@@ -56,6 +58,7 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "aggregator" {
+  provider   = aws.Tokyo
   role       = aws_iam_role.aggregator.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSConfigRoleForOrganizations"
 }
@@ -88,6 +91,7 @@ resource "aws_s3_bucket" "delivery" {
 }
 
 resource "aws_config_configuration_recorder" "organization" {
+  provider = aws.Tokyo
   name     = "my-recorder"
   role_arn = aws_iam_role.recorder.arn
 }
