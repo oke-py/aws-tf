@@ -1,4 +1,5 @@
 resource "aws_config_aggregate_authorization" "organization" {
+  provider   = aws.Tokyo
   account_id = var.org_admin_id
   region     = "ap-northeast-1"
 }
