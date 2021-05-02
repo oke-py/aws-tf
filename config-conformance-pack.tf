@@ -7,11 +7,6 @@ resource "aws_config_conformance_pack" "organization" {
   name               = "my-rule"
   delivery_s3_bucket = aws_s3_bucket.delivery.bucket
 
-  input_parameter {
-    parameter_name  = "AccessKeysRotatedParameterMaxAccessKeyAge"
-    parameter_value = "90"
-  }
-
   template_body = <<EOT
 Resources:
   IamRootAccessKeyCheck:
