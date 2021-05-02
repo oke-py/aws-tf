@@ -4,7 +4,7 @@ resource "aws_config_aggregate_authorization" "organization" {
 }
 
 resource "aws_config_conformance_pack" "organization" {
-  name = "my-rule"
+  name               = "my-rule"
   delivery_s3_bucket = aws_s3_bucket.delivery.bucket
 
   input_parameter {
