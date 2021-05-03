@@ -76,6 +76,7 @@ resource "aws_organizations_policy" "scp_restrict_region" {
       "Condition": {
         "StringNotEquals": {
           "aws:RequestedRegion": [
+            "us-east-1",
             "ap-northeast-1"
           ]
         }
