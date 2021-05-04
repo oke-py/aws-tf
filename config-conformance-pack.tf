@@ -91,6 +91,63 @@ resource "aws_s3_bucket" "delivery" {
   }
 }
 
+data "aws_iam_policy_document" "config-bucket-policy" {
+  version = "2012-10-17"
+  statement {
+    sid    = "AWSConfigBucketPermissionsCheck"
+    effect = "Allow"
+    principals {
+      type        = "Service"
+      identifiers = ["config.amazonaws.com"]
+    }
+    actions = [
+      "s3:GetBucketAcl"
+    ]
+    resources = [
+      aws_s3_bucket.delivery.arn
+    ]
+  }
+  statement {
+    sid    = "AWSConfigBucketExistenceCheck"
+    effect = "Allow"
+    principals {
+      type        = "Service"
+      identifiers = ["config.amazonaws.com"]
+    }
+    actions = [
+      "s3:ListBucket"
+    ]
+    resources = [
+      aws_s3_bucket.delivery.arn
+    ]
+  }
+  statement {
+    sid    = "AWSConfigBucketDelivery"
+    effect = "Allow"
+    principals {
+      type        = "Service"
+      identifiers = ["config.amazonaws.com"]
+    }
+    actions = [
+      "s3:PutObject"
+    ]
+    resources = [
+      "${aws_s3_bucket.delivery.arn}/AWSLogs/${data.aws_caller_identity.self.account_id}/Config/*"
+    ]
+    condition {
+      test     = "StringEquals"
+      variable = "s3:x-amz-acl"
+
+      values = ["bucket-owner-full-control"]
+    }
+  }
+}
+
+resource "aws_s3_bucket_policy" "delivery" {
+  bucket = aws_s3_bucket.delivery.bucket
+  policy = data.aws_iam_policy_document.config-bucket-policy.json
+}
+
 resource "aws_config_configuration_recorder" "organization" {
   provider = aws.Tokyo
   name     = "my-recorder"
