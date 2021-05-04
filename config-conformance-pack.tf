@@ -120,7 +120,7 @@ POLICY
 resource "aws_config_configuration_recorder_status" "organization" {
   name       = aws_config_configuration_recorder.organization.name
   is_enabled = true
-  depends_on = [aws_config_delivery_channel.config-dc]
+  depends_on = [aws_config_delivery_channel.organization]
 }
 
 resource "aws_config_delivery_channel" "organization" {
