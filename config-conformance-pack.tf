@@ -144,8 +144,9 @@ data "aws_iam_policy_document" "config-bucket-policy" {
 }
 
 resource "aws_s3_bucket_policy" "delivery" {
-  bucket = aws_s3_bucket.delivery.bucket
-  policy = data.aws_iam_policy_document.config-bucket-policy.json
+  provider = aws.Tokyo
+  bucket   = aws_s3_bucket.delivery.bucket
+  policy   = data.aws_iam_policy_document.config-bucket-policy.json
 }
 
 resource "aws_config_configuration_recorder" "organization" {
