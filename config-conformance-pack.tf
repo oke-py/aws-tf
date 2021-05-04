@@ -176,12 +176,14 @@ POLICY
 }
 
 resource "aws_config_configuration_recorder_status" "organization" {
+  provider   = aws.Tokyo
   name       = aws_config_configuration_recorder.organization.name
   is_enabled = true
   depends_on = [aws_config_delivery_channel.organization]
 }
 
 resource "aws_config_delivery_channel" "organization" {
+  provider       = aws.Tokyo
   name           = "my-config-delivery"
   s3_bucket_name = aws_s3_bucket.delivery.bucket
 }
