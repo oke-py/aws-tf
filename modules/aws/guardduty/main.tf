@@ -1,6 +1,3 @@
-variable "aws_account_id" {}
-variable "slack_aws_alert_url" {}
-
 resource "aws_guardduty_detector" "guardduty" {
   enable = true
 }
