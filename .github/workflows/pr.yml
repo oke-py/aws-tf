@@ -29,8 +29,6 @@ jobs:
         role-to-assume: arn:aws:iam::${{ secrets.ORG_ADMIN_ID }}:role/GithubActionRole
         role-session-name: GithubActionSession
 
-    - run: aws sts get-caller-identity
-
     - uses: hashicorp/setup-terraform@v1
 
     - name: Terraform Init
