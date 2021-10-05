@@ -15,5 +15,5 @@ resource "aws_cloudformation_stack" "amazon-guardduty-to-slack" {
     SlackChannel = "#alert-aws"
     MinSeverityLevel = "LOW"
   }
-  template_url = "https://tfstate-ng46.s3.amazonaws.com/gd2slack.template"
+  template_url = "https://outside-code-management.s3.ap-northeast-1.amazonaws.com/gd2slack.template"
 }

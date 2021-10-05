@@ -7,22 +7,15 @@ terraform {
     }
   }
   backend "s3" {
-    bucket  = "tfstate-ng46"
-    region  = "us-east-1"
-    key     = "terraform.tfstate"
+    bucket  = "outside-code-management"
+    region  = "ap-northeast-1"
+    key     = "infra.state"
     encrypt = true
   }
 }
 
 provider "aws" {
   region = "us-east-1"
-}
-
-resource "aws_s3_bucket" "terraform_state" {
-  bucket = "tfstate-ng46"
-  versioning {
-    enabled = true
-  }
 }
 
 resource "aws_organizations_organization" "org" {
