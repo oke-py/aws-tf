@@ -40,7 +40,7 @@ data "aws_iam_policy_document" "s3bucket-policy" {
     condition {
       test     = "Bool"
       variable = "aws:SecureTransport"
-      values   = "false"
+      values   = ["false"]
     }
   }
   statement {
