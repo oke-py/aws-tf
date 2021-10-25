@@ -24,7 +24,25 @@ resource "aws_budgets_budget" "cost" {
 ########################################
 
 data "aws_iam_policy_document" "s3bucket-policy" {
-  version = "2008-10-17"
+  version = "2012-10-17"
+  statement {
+    sid    = "AllowSSLRequestsOnly"
+    effect = "Deny"
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }
+    actions = ["s3:*"]
+    resources = [
+      "${aws_s3_bucket.cost-report.arn}",
+      "${aws_s3_bucket.cost-report.arn}/*"
+    ]
+    condition {
+      test     = "Bool"
+      variable = "aws:SecureTransport"
+      values   = ["false"]
+    }
+  }
   statement {
     sid    = "Stmt1"
     effect = "Allow"
