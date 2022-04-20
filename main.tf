@@ -31,57 +31,6 @@ resource "aws_organizations_organization" "org" {
   feature_set = "ALL"
 }
 
-resource "aws_organizations_policy" "scp_restrict_region" {
-  name = "deny except for Tokyo region"
-
-  content = <<CONTENT
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "DenyExceptForTokyo",
-      "Effect": "Deny",
-      "NotAction": [
-        "a4b:*", "artifact:*", "aws-portal:*",
-        "budgets:*",
-        "ce:*", "chime:*", "cloudfront:*", "cur:*",
-        "datapipeline:GetAccountLimits", "directconnect:",
-        "globalaccelerator:*",
-        "health:*",
-        "iam:*", "importexport:*",
-        "mobileanalytics:*",
-        "organizations:*",
-        "resource-groups:*", "route53:*", "route53domains:*",
-        "s3:GetBucketLocation", "s3:ListAllMyBuckets", "shield:*", "support:*",
-        "tag:*", "trustedadvisor:*",
-        "waf:*",
-        "wellarchitected:*"
-      ],
-      "Resource": "*",
-      "Condition": {
-        "StringNotEquals": {
-          "aws:RequestedRegion": [
-            "us-east-1",
-            "ap-northeast-1"
-          ]
-        }
-      }
-    }
-  ]
-}
-CONTENT
-}
-
-resource "aws_organizations_policy_attachment" "account" {
-  policy_id = aws_organizations_policy.scp_restrict_region.id
-  target_id = var.org_account1_id
-}
-
-resource "aws_organizations_organizational_unit" "dev" {
-  name      = "dev"
-  parent_id = aws_organizations_organization.org.roots[0].id
-}
-
 resource "aws_guardduty_organization_admin_account" "root" {
   depends_on = [aws_organizations_organization.org]
 
