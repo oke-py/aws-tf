@@ -11,10 +11,10 @@ jobs:
       id-token: write
       contents: read
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@9e1405074160aa259ccddd6ba2520c8cfe6fbefa
+      uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-region: us-east-1
         role-to-assume: arn:aws:iam::${{ secrets.ORG_ADMIN_ID }}:role/GithubActionRole
