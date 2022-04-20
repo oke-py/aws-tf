@@ -64,6 +64,5 @@ jobs:
       id: plan
       env:
         TF_VAR_org_admin_id: ${{ secrets.ORG_ADMIN_ID }}
-        TF_VAR_org_account1_id: ${{ secrets.ORG_ACCOUNT1_ID }}
         TF_VAR_slack_aws_alert_url: ${{ secrets.SLACK_AWS_ALERT_URL }}
       run: terraform plan -no-color
