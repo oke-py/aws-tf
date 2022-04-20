@@ -110,5 +110,4 @@ resource "aws_cloudtrail" "sec-cloudtrail" {
   enable_log_file_validation    = true
   include_global_service_events = true
   is_multi_region_trail         = true
-  is_organization_trail         = true
 }
