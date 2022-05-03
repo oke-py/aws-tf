@@ -98,7 +98,7 @@ resource "aws_s3_bucket_acl" "cloudtrail-bucket_acl" {
 resource "aws_s3_bucket_lifecycle_configuration" "cloudtrail-bucket_lifecycle_configuration" {
   bucket = aws_s3_bucket.cloudtrail-bucket.id
   rule {
-    id = "tf-s3-lifecycle-cloudtrail"
+    id     = "tf-s3-lifecycle-cloudtrail"
     status = "Enabled"
     transition {
       days          = "366"
