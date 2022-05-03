@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: hashicorp/setup-terraform@v1
+    - uses: hashicorp/setup-terraform@v2
     - name: Terraform fmt
       id: fmt
       run: terraform fmt -check
@@ -29,7 +29,7 @@ jobs:
         role-to-assume: arn:aws:iam::${{ secrets.ORG_ADMIN_ID }}:role/GithubActionRole
         role-session-name: GithubActionSession
 
-    - uses: hashicorp/setup-terraform@v1
+    - uses: hashicorp/setup-terraform@v2
 
     - name: Terraform Init
       id: init
@@ -54,7 +54,7 @@ jobs:
         role-to-assume: arn:aws:iam::${{ secrets.ORG_ADMIN_ID }}:role/GithubActionRole
         role-session-name: GithubActionSession
 
-    - uses: hashicorp/setup-terraform@v1
+    - uses: hashicorp/setup-terraform@v2
 
     - name: Terraform Init
       id: init
