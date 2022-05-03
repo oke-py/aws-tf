@@ -76,7 +76,6 @@ data "aws_iam_policy_document" "s3bucket-policy" {
 
 resource "aws_s3_bucket" "cost-report" {
   bucket        = "sec-cur-ng46"
-  acl           = "private"
   force_destroy = "false"
 }
 
@@ -103,4 +102,9 @@ resource "aws_cur_report_definition" "cost-report" {
   time_unit                  = "HOURLY"
   additional_schema_elements = ["RESOURCES"]
   additional_artifacts       = ["REDSHIFT", "QUICKSIGHT"]
+}
+
+resource "aws_s3_bucket_acl" "cost-report_acl" {
+  bucket = aws_s3_bucket.cost-report.id
+  acl    = "private"
 }

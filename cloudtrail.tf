@@ -60,28 +60,6 @@ data "aws_iam_policy_document" "cloudtrail-bucket-policy" {
 
 resource "aws_s3_bucket" "cloudtrail-bucket" {
   bucket = "sec-cloudtrail-ng46"
-  acl    = "private"
-
-  lifecycle_rule {
-    enabled = true
-    transition {
-      days          = "366"
-      storage_class = "GLACIER"
-    }
-  }
-
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        kms_master_key_id = "aws/s3"
-        sse_algorithm     = "aws:kms"
-      }
-    }
-  }
-
-  versioning {
-    enabled = true
-  }
 }
 
 resource "aws_s3_bucket_policy" "cloudtrail" {
@@ -110,4 +88,38 @@ resource "aws_cloudtrail" "sec-cloudtrail" {
   enable_log_file_validation    = true
   include_global_service_events = true
   is_multi_region_trail         = true
+}
+
+resource "aws_s3_bucket_acl" "cloudtrail-bucket_acl" {
+  bucket = aws_s3_bucket.cloudtrail-bucket.id
+  acl    = "private"
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "cloudtrail-bucket_lifecycle_configuration" {
+  bucket = aws_s3_bucket.cloudtrail-bucket.id
+  rule {
+    id = "tf-s3-lifecycle-cloudtrail"
+    status = "Enabled"
+    transition {
+      days          = "366"
+      storage_class = "GLACIER"
+    }
+  }
+}
+
+resource "aws_s3_bucket_versioning" "cloudtrail-bucket_versioning" {
+  bucket = aws_s3_bucket.cloudtrail-bucket.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "cloudtrail-bucket_server_side_encryption_configuration" {
+  bucket = aws_s3_bucket.cloudtrail-bucket.id
+  rule {
+    apply_server_side_encryption_by_default {
+      kms_master_key_id = "aws/s3"
+      sse_algorithm     = "aws:kms"
+    }
+  }
 }
