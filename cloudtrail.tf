@@ -1,5 +1,3 @@
-data "aws_caller_identity" "self" {}
-
 data "aws_iam_policy_document" "cloudtrail-bucket-policy" {
   version = "2012-10-17"
   statement {
