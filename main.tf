@@ -35,7 +35,7 @@ module "virginia" {
   providers = {
     aws = aws.Virginia
   }
-  aws_account_id      = data.aws_caller_identity.self.account_id
+  aws_account_id = data.aws_caller_identity.self.account_id
 }
 
 module "tokyo" {
@@ -43,5 +43,5 @@ module "tokyo" {
   providers = {
     aws = aws.Tokyo
   }
-  aws_account_id      = data.aws_caller_identity.self.account_id
+  aws_account_id = data.aws_caller_identity.self.account_id
 }
