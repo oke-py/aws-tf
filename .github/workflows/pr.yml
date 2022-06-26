@@ -62,6 +62,4 @@ jobs:
 
     - name: Terraform Plan
       id: plan
-      env:
-        TF_VAR_slack_aws_alert_url: ${{ secrets.SLACK_AWS_ALERT_URL }}
       run: terraform plan -no-color

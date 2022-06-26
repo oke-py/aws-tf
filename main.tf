@@ -36,7 +36,6 @@ module "virginia" {
     aws = aws.Virginia
   }
   aws_account_id      = data.aws_caller_identity.self.account_id
-  slack_aws_alert_url = var.slack_aws_alert_url
 }
 
 module "tokyo" {
@@ -45,5 +44,4 @@ module "tokyo" {
     aws = aws.Tokyo
   }
   aws_account_id      = data.aws_caller_identity.self.account_id
-  slack_aws_alert_url = var.slack_aws_alert_url
 }
